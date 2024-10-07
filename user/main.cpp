@@ -30,8 +30,8 @@ int main(int argc, char const *argv[])
 
 	uintptr_t base = 0;
 	uint64_t result = 0;
-	char module_name[0x100] = "libunity.so";
-	pid_t pid = get_name_pid((char *)"com.tencent.tmgp.sgame");
+	char module_name[0x100] = "libUE4.so";
+	pid_t pid = get_name_pid((char *)"com.pubg.imobile");
 	printf("pid = %d\n", pid);
 
 	driver->initialize(pid);
