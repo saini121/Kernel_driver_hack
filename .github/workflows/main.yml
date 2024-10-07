@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  # Use the latest version of the checkout action
+        uses: actions/checkout@v4  # Updated to the latest version
 
       - name: Install Required Packages
         run: |
@@ -24,7 +24,7 @@ jobs:
           make -C /lib/modules/$(uname -r)/build M=$(pwd) modules
 
       - name: Upload Module
-        uses: actions/upload-artifact@v3  # Updated to v3
+        uses: actions/upload-artifact@v3  # Ensure you are using the latest version
         with:
           name: kernel-module
           path: your_module.ko  # Change to your compiled module's name
