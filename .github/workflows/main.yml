@@ -12,9 +12,9 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Use the latest version of the checkout action
 
-      - name: Install required packages
+      - name: Install Required Packages
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential linux-headers-$(uname -r)
@@ -24,7 +24,7 @@ jobs:
           make -C /lib/modules/$(uname -r)/build M=$(pwd) modules
 
       - name: Upload Module
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3  # Updated to v3
         with:
           name: kernel-module
-          path: Driver.ko  # Change to your compiled module's name
+          path: your_module.ko  # Change to your compiled module's name
