@@ -29,6 +29,7 @@ jobs:
       with:
         repository: saini121/ksu_kernel_oplus_RMX341
         path: ksu_kernel_oplus_RMX341
+        ref: main # Specify the branch explicitly
 
     - name: Set up JDK 8
       uses: actions/setup-java@v1
