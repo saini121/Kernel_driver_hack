@@ -14,21 +14,18 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    - name: Set up Android SDK
-      uses: android-actions/setup-android@v2
-      with:
-        api-level: 30
-        build-tools: 30.0.2
+    - name: Set up dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev
 
     - name: Build your kernel here
-  run: ./user/test.sh
+      run: ./user/test.sh  # Adjust the path if the script is in a different folder
 
-
-    - name: Upload build artifact
+    - name: Upload kernel build artifacts
       uses: actions/upload-artifact@v3
       with:
         name: kernel-build
-        path: path/to/your/build/output/file.zip
-        
+        path: ./path_to_build_output # Adjust this path to where your build outputs are stored
