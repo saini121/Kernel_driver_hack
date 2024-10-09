@@ -24,7 +24,7 @@ jobs:
         repository: saini121/Kernel_driver_hack
         path: Kernel_driver_hack
 
-    - name: Checkout ksu_kernel_oplus_RMX341 repository
+    - name: Checkout https://github.com/saini121/ksu_kernel_oplus_RMX3461 repository
       uses: actions/checkout@v2
       with:
         repository: saini121/ksu_kernel_oplus_RMX341
