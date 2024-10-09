@@ -22,10 +22,9 @@ jobs:
         api-level: 30
         build-tools: 30.0.2
 
-    - name: Build Kernel
-      run: |
-        # Build your kernel here
-        ./build.sh
+    - name: Build your kernel here
+  run: ./user/test.sh
+
 
     - name: Upload build artifact
       uses: actions/upload-artifact@v3
