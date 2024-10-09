@@ -1,4 +1,4 @@
-name: CI
+name: Build Kernel
 
 on:
   push:
@@ -10,23 +10,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout crDroid Kernel Repository
-        uses: actions/checkout@v3
-        with:
-          repository: crdroidandroid/android_kernel_oplus_RMX3461
-          path: android_kernel_oplus_RMX3461
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-      - name: Set up JDK 11
+      # Step 2: Set up Java (if needed for your build process)
+      - name: Set up Java
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
-          distribution: 'adopt'  # Specify the distribution here
+          java-version: '11'  # Adjust to the required Java version
+          distribution: 'temurin'  # Use 'temurin' or other as needed
 
+      # Step 3: Set up your build environment
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev
+
+      # Step 4: Build the kernel
       - name: Build Kernel
         run: |
-          cd android_kernel_oplus_RMX3461
-          # Add your build commands here
-          echo "Building the kernel..."
+          make clean  # Clean previous builds if necessary
+          make -j$(nproc)  # Adjust as necessary for your build commands
 
-      # Add more steps as needed
-
+      # Step 5: Upload Kernel and Module
+      - name: Upload Kernel and Module
+        uses: actions/upload-artifact@v4
+        with:
+          name: module
+          path: |
+            ${{ steps.build.outputs.outfile }}  # Ensure this output is defined in your build step
+            ./out/drivers/memkernel/memkernel.ko  # Adjust the path as necessary
