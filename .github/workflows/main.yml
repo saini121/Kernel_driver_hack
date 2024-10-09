@@ -27,13 +27,4 @@ jobs:
           cd android_kernel_oplus_RMX3461
           # Add your build commands here
           echo "Building the kernel..."
-          make -j$(nproc)  # Adjust this based on your build process
-
-      - name: Upload Kernel and Module
-        uses: actions/upload-artifact@v4
-        with:
-          name: kernel-module
-          path: |
-            android_kernel_oplus_RMX3461/arch/arm64/boot/Image.gz  # Adjust based on the output file
-            android_kernel_oplus_RMX3461/out/drivers/memkernel/memkernel.ko  # Adjust based on your module path
-
+      # Add more steps as needed
