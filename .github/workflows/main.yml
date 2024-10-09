@@ -34,7 +34,7 @@ jobs:
           ./test.sh
 
       - name: Upload Compiled Kernel
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3  # Updated to v3
         with:
           name: compiled-kernel
           path: android_kernel_oplus_RMX3461/main  # Adjust the path if needed
