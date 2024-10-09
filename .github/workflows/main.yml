@@ -30,7 +30,7 @@ jobs:
       # Step 4: Build the kernel
       - name: Build Kernel
         run: |
-          make clean  # Clean previous builds if necessary
+          make mrproper  # Clean previous builds if necessary
           make -j$(nproc)  # Adjust as necessary for your build commands
 
       # Step 5: Upload Kernel and Module
