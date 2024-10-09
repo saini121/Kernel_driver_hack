@@ -1,10 +1,7 @@
-name: Build and Test
+name: CI
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
     branches:
       - main
 
@@ -12,62 +9,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      ANDROID_NDK_VERSION: r21e
-      ANDROID_SDK_VERSION: "30.0.3"
-      ANDROID_BUILD_TOOLS_VERSION: "30.0.3"
-
     steps:
-    - name: Checkout Kernel_driver_hack repository
-      uses: actions/checkout@v2
-      with:
-        repository: saini121/Kernel_driver_hack
-        path: Kernel_driver_hack
+      - name: Checkout crDroid Kernel Repository
+        uses: actions/checkout@v3
+        with:
+          repository: crdroidandroid/android_kernel_oplus_RMX3461
+          path: android_kernel_oplus_RMX3461
 
-    - name: Checkout ksu_kernel_oplus_RMX341 repository
-      uses: actions/checkout@v2
-      with:
-        repository: saini121/ksu_kernel_oplus_RMX341
-        path: ksu_kernel_oplus_RMX341
-        ref: main # Specify the branch explicitly
-        token: ${{ secrets.GITHUB_TOKEN }} # Use GitHub token for private repositories
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
 
-    - name: Set up JDK 8
-      uses: actions/setup-java@v1
-      with:
-        java-version: 8
+      - name: Build Kernel
+        run: |
+          cd android_kernel_oplus_RMX3461
+          # Add your build commands here
+          echo "Building the kernel..."
 
-    - name: Download and set up Android SDK
-      uses: android-actions/setup-android@v2
-      with:
-        api-level: ${{ env.ANDROID_SDK_VERSION }}
-        build-tools: ${{ env.ANDROID_BUILD_TOOLS_VERSION }}
-
-    - name: Download and set up Android NDK
-      run: |
-        wget https://dl.google.com/android/repository/android-ndk-${{ env.ANDROID_NDK_VERSION }}-linux-x86_64.zip
-        unzip android-ndk-${{ env.ANDROID_NDK_VERSION }}-linux-x86_64.zip
-        mv android-ndk-${{ env.ANDROID_NDK_VERSION }} $HOME/android-ndk
-        echo "ANDROID_NDK_HOME=$HOME/android-ndk" >> $GITHUB_ENV
-        echo "PATH=$HOME/android-ndk:$PATH" >> $GITHUB_ENV
-
-    - name: Set up environment variables
-      run: |
-        echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
-        echo "ANDROID_NDK_HOME=$HOME/android-ndk" >> $GITHUB_ENV
-        echo "PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$HOME/android-ndk:$PATH" >> $GITHUB_ENV
-
-    - name: Build the project
-      run: |
-        cd Kernel_driver_hack/user
-        ./gradlew assembleDebug
-
-    - name: Build the kernel module
-      run: |
-        cd ksu_kernel_oplus_RMX341
-        make
-
-    - name: Run tests
-      run: |
-        cd Kernel_driver_hack/user
-        ./gradlew test
+      # Add more steps as needed
