@@ -21,11 +21,14 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev
 
+    - name: Make test.sh executable
+      run: chmod +x ./user/test.sh
+
     - name: Build your kernel here
-      run: ./user/test.sh  # Adjust the path if the script is in a different folder
+      run: ./user/test.sh
 
     - name: Upload kernel build artifacts
       uses: actions/upload-artifact@v3
       with:
         name: kernel-build
-        path: ./path_to_build_output # Adjust this path to where your build outputs are stored
+        path: ./path_to_build_output  # Adjust this to where your build outputs are located
